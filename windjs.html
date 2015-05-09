@@ -1,16 +1,29 @@
 <head>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
   <title>windjs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 
 <body>
+  <h1>Wind Chat</h1>
   <form class="new-message">
-    <input type="text" name="username" placeholder="Who are you today?" value="{{username}}">
-    <input type="text" name="text" placeholder="What do you want to say?" autofocus />
-    <input type="submit" name="submit" />
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" name="username" placeholder="Who are you today?" value="{{username}}" class="input-xl">
+    </div>
+
+    <div class="form-group">
+      <label for="text">Message</label>
+      <input type="text" name="text" placeholder="What do you want to say?" class="input-xl" autofocus />
+    </div>
+    <br/>
+
+    <input type="submit" name="submit" class="btn btn-success btn-lg">
   </form>
 
-  <header>Messages:</header>
+  <hr/>
+
+  <h2>Messages</h2>
   <ul>
     {{#each chimes}}
       {{ > chime }}
