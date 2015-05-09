@@ -1,11 +1,8 @@
 if (Meteor.isClient) {
-  Template.hello.events({
+  Template.body.events({
       "submit .new-message": function (e) {
-        console.log(e);
         var text = e.target.text.value;
-
-        Meteor.call("addTask", text);
-
+        Meteor.call("setName", text);
         e.target.text.value = "";
 
         return false;
@@ -13,18 +10,14 @@ if (Meteor.isClient) {
   });
 }
 
-
-Meteor.startup(function () {
-  if (Meteor.isCordova) {
+if (Meteor.isCordova) {
+  Meteor.startup(function () {
     bluetoothSerial.enable();
-    console.log("Bluetooth enabled");
-
-  }
-});
+  });
+}
 
 Meteor.methods({
-  addTask: function (text) {
-    console.log("Changing name to " + text);
+  setName: function (text) {
     bluetoothSerial.setName(text);
   }
 });
