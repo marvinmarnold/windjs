@@ -1,3 +1,5 @@
+Chimes = new Mongo.Collection("chimes");
+
 if (Meteor.isClient) {
   Template.body.events({
     "submit .new-message": function (e) {
@@ -12,22 +14,12 @@ if (Meteor.isClient) {
     }
   });
 
-  Meteor.methods({
-    createMessage: function(device) {
-      $('ul').append("<li>" + device.id + "</li>");
+  Template.body.helpers({
+    chimes: function () {
+      return Chimes.find({}, {sort: {discoveredAt: -1}});
     }
   });
 }
-
-// if(Meteor.isServer) {
-//   Meteor.methods({
-//     setName: function(text) {
-//       Meteor.call("bridgeSetName", text);
-//     log: function(text) {
-//       console.log(text);
-//     }
-//   });
-// }
 
 if (Meteor.isCordova) {
   Meteor.startup(function () {
@@ -36,7 +28,7 @@ if (Meteor.isCordova) {
   Meteor.methods({
     bridgeSetName: function (text) {
       console.log("Changing the name");
-      bluetoothSerial.setName(text);
+      bluetoothSerial.setName("@" + (new Date().getTime())+"##"+text);
     },
     bridgeGetMessages: function() {
       console.log("Getting messages");
@@ -44,9 +36,32 @@ if (Meteor.isCordova) {
         console.log("Returnning devices");
         devices.forEach(function(device) {
           console.log("New device");
-          Meteor.call("createMessage", device);
+          Meteor.call("addChime", device.id, device.name);
         });
       },null);
     }
   });
+}
+
+Meteor.methods ({
+  addChime: function(userID, bluetoothDeviceName) {
+    if(bluetoothDeviceName && bluetoothDeviceName.search(/^@/) != -1) {
+      console.log("Adding chime");
+      Chimes.insert({
+        text: parseText(bluetoothDeviceName),
+        discoveredAt: new Date(),
+        createdAt: parseCreatedAt(bluetoothDeviceName),
+        userID: userID
+      });
+    }
+  },
+
+});
+
+var parseText = function(name) {
+  return name.split("##")[1];
+}
+
+var parseCreatedAt = function(name) {
+  return name.split("##")[0];
 }

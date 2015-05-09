@@ -10,5 +10,13 @@
 
   <button class="get-messages">Get messages</button>
   <ul>
+    {{#each chimes}}
+      {{ > chime }}
+    {{/each}}
   </ul>
 </body>
+
+
+<template name="chime">
+  <li>{{userID}}: {{text}}</li>
+</template>
