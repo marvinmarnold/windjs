@@ -1,22 +1,26 @@
 <head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
   <title>windjs</title>
 </head>
 
 <body>
   <form class="new-message">
-    <input type="text" name="text" placeholder="What do you want to say?" />
+    <input type="text" name="username" placeholder="Who are you today?" value="{{username}}">
+    <input type="text" name="text" placeholder="What do you want to say?" autofocus />
     <input type="submit" name="submit" />
   </form>
 
-  <button class="get-messages">Get messages</button>
+  <header>Messages:</header>
   <ul>
     {{#each chimes}}
       {{ > chime }}
     {{/each}}
   </ul>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="http://jsconsole.com/remote.js?3E4FC8AD-17E7-4A9C-8841-468755C2F7FD"></script>
 </body>
 
 
 <template name="chime">
-  <li>{{userID}}: {{text}}</li>
+  <li>{{username}}: {{text}}</li>
 </template>
