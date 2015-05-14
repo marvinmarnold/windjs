@@ -1,4 +1,4 @@
-Chimes = new Mongo.Collection("chimesss");
+Chimes = new Mongo.Collection("chimes");
 
 if (Meteor.isClient) {
   Meteor.startup(function() {
