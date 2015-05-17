@@ -28,10 +28,14 @@ if (Meteor.isClient) {
   });
 }
 
+
 if (Meteor.isCordova) {
   Meteor.startup(function () {
     bluetoothSerial.enable();
+    console.log("Setting discoverable");
+    bluetoothSerial.setDiscoverable(0);
   });
+
   Meteor.methods({
     bridgeSetName: function (username, text) {
       var createdAt = new Date().getTime();
